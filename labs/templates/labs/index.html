@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    {%load static%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css" />
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <title>5CR1pT-KidDI3</title>
+    <style>
+      body
+      {
+        background : url("{% static 'background.jpg' %}");
+        background-size: cover;
+        
+      }
+    </style>
+
+  </head>
+  <body>
+    <div id="container" >
+      <img src="{% static 'background5.jpg' %}">
+      <img src="{% static 'background1.jpg' %}">
+      <img src="{% static 'background2.jpg' %}">
+      <img src="{% static 'background4.jpg' %}">
+  </div>
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position:relative">
+        <a class="navbar-brand navhead" href="#">
+          <img src="{% static 'logo.png' %}" width="30" height="30" alt="">
+          
+          <b>5CR1pT-KidDI3</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link btn btn-info my-2 mx-2 my-sm-0" href="/api/debug_info" target="_blank"> Info </a>
+            </li>
+            <li class="nav-item active">
+                <button class="nav-link btn btn-danger my-2 mx-2 my-sm-0" onClick="prune_containers()"> Reset </button>
+
+            </li>
+           
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
+
+    {% if messages %}
+    {% for message in messages %}
+
+        {%if message.level == 20%}
+        <div class="alert alert-info alert-dismissible m-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }} 
+            </div>
+        {%endif%}
+        {%if message.level == 25%}
+        <div class="alert alert-success alert-dismissible m-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }} 
+            </div>
+        {%endif%}
+        {%if message.level == 30%}
+        <div class="alert alert-warning alert-dismissible m-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }} 
+            </div>
+        {%endif%}
+        {%if message.level == 40%}
+        <div class="alert alert-danger alert-dismissible m-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }} 
+            </div>
+        {%endif%}
+     
+
+
+    {% endfor %}
+      {% endif %}
+
+     
+
+
+    <div class=" container">
+    <div class=" row" >
+
+      <!--CONTAINER 1-->
+      {%for lab in labs%}
+      <div class="card text-white  mb-3 column col-xs-12 col-sm-5 col-md-4 col-lg-3" >
+        <div class="card-header"><h6>{{lab.name}}</h6></div>
+        <div class="card-body">
+          <p class="card-text">{{ lab.description | truncatechars:150  }} </p>
+          <button type="button" class="button btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter{{lab.id}}">Learn more</button>
+          
+          {%if "STOPPED"  in lab.status  %}
+            
+          <button type="button" class="button btn btn-success"  onClick="start_lab({{lab.id}})">Start</button>
+          {%elif "STARTED"  in lab.status %}
+          <button type="button" class="button btn btn-danger"  onClick="stop_lab({{lab.id}})">Stop</button>
+            {% else %}
+            <div class="spinner-border text-warning mt-2" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+          {%endif%}
+        </div>
+
+        <div class="modal fade" id="exampleModalCenter{{lab.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" style="background-color:rgba(1, 2, 3, 0.7)">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">{{lab.name}}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    {{lab.description | linebreaks}}
+                  <br/>
+                  PORTS :
+                  {%for port in lab.ports%}
+
+                  <a href="#" class="badge badge-info">{{port}}</a><br>
+                  {%endfor%}
+                  <hr>
+                  STATUS : <a href="#" class="badge badge-info">{{lab.current_status}}</a><br>
+                
+                  <div>
+
+                   {%for tag in lab.tags%}
+                  <div class="chip bg-secondary">
+                     {{tag}}
+                  </div>
+                  {%endfor%}
+                </div>                 
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      {%endfor%}
+      
+    <script>
+        
+    </script>
+
+    <script src="{% static 'main.js' %}"></script>
+    </body>
+
+
+    </html>

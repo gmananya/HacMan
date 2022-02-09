@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html  lang="en-US">
+<head>
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/utilities.min.css" integrity="sha512-Y8cJYgNbd3VacNNezxAdncUu75Uj7uR/Dtb4ffepQrtFww5/QlgYt2IwexMwB8/SZWCCVe6kOY20A2Q4zQf5vQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+    }
+
+    /* Modal Content */
+    .modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+    }
+
+    /* The Close Button */
+    .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    }
+
+    .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    }
+
+    .modal-body {padding: 2px 16px;}
+
+    .modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+    }
+
+    @keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+    }
+
+    @-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+    }
+
+    @keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+    }
+</style>
+
+<style>
+    /*Banner open/load animation*/
+    .alert-banner {
+      -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    /*Banner close animation*/
+    .alert-banner input:checked~* {
+      -webkit-animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+      animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    }
+
+    /*Footer open/load animation*/
+    .alert-footer {
+      -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    /*Footer close animation*/
+    .alert-footer input:checked~* {
+      -webkit-animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+      animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    }
+
+    /*Toast open/load animation*/
+    .alert-toast {
+      -webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    /*Toast close animation*/
+    .alert-toast input:checked~* {
+      -webkit-animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    /* -------------------------------------------------------------
+	 * Animations generated using Animista * w: http://animista.net, 
+	 * ---------------------------------------------------------- */
+
+    @-webkit-keyframes slide-in-top {
+      0% {
+        -webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    @keyframes slide-in-top {
+      0% {
+        -webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes slide-out-top {
+      0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);
+        opacity: 0
+      }
+    }
+
+    @keyframes slide-out-top {
+      0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes slide-in-bottom {
+      0% {
+        -webkit-transform: translateY(1000px);
+        transform: translateY(1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    @keyframes slide-in-bottom {
+      0% {
+        -webkit-transform: translateY(1000px);
+        transform: translateY(1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes slide-out-bottom {
+      0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateY(1000px);
+        transform: translateY(1000px);
+        opacity: 0
+      }
+    }
+
+    @keyframes slide-out-bottom {
+      0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateY(1000px);
+        transform: translateY(1000px);
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes slide-in-right {
+      0% {
+        -webkit-transform: translateX(1000px);
+        transform: translateX(1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1
+      }
+    }
+
+    @keyframes slide-in-right {
+      0% {
+        -webkit-transform: translateX(1000px);
+        transform: translateX(1000px);
+        opacity: 0
+      }
+
+      100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes fade-out-right {
+      0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateX(50px);
+        transform: translateX(50px);
+        opacity: 0
+      }
+    }
+
+    @keyframes fade-out-right {
+      0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1
+      }
+
+      100% {
+        -webkit-transform: translateX(50px);
+        transform: translateX(50px);
+        opacity: 0
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <section class="antialiased bg-gray-100 text-gray-600 h-screen px-4">
+        <div class="flex flex-col justify-center h-full">
+            <!-- Table -->
+            <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+                <header class="px-5 py-4 border-b border-gray-100">
+                    <h2 class="font-semibold text-gray-800">CSDF LAB
+                        <a class="bg-blue-600 text-xl float-right" href="/api/debug_info"> 
+                            INFO</a> 
+                        <button class="bg-red-600 text-xl float-right" onClick="prune_containers()"> 
+                        RESET</button> 
+
+                    </h2>
+                </header>
+                <div class="p-3">
+                    <div class="overflow-x-auto">
+                        <table class="table-auto w-full">
+                            <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                                <tr>
+                                    <th class="p-2 whitespace-nowrap">
+                                        <div class="font-semibold text-left">Name</div>
+                                    </th>
+                                    <th class="p-2 whitespace-nowrap">
+                                        <div class="font-semibold text-left">Start</div>
+                                    </th>
+                                    <th class="p-2 whitespace-nowrap">
+                                        <div class="font-semibold text-left">Stop</div>
+                                    </th>
+                                    <th class="p-2 whitespace-nowrap">
+                                        <div class="font-semibold text-center">Status</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-gray-100">
+                               {%for lab in labs%}
+                                <tr id="{{lab.id}}">
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" src="https://raw.githubusercontent.com/cruip/vuejs-admin-dashboard-template/main/src/images/user-36-09.jpg" width="40" height="40" alt="Burak Long"></div>
+                                            <div class="font-medium text-gray-800 lab_name">
+                                                <a target="_blank" href="/lab/detail/{{lab.id}}">{{lab.name}}</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="text-left lab_start_button">
+                                        {%if "STARTED" not in lab.status  %}
+                                            <button onClick="start_lab({{lab.id}})" style="color:green">  Start </button>
+                                        {%endif%}
+                                        </div>
+                                    </td>
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="text-left font-medium text-green-500 lab_stop_button">
+                                        {%if "STOPPED" not in lab.status %}
+                                            <button onClick="stop_lab({{lab.id}})" style="color:red"> Stop </button>
+                                        {%endif%}
+                                        
+                                        </div>
+                                    </td>
+                                    <td class="p-2 whitespace-nowrap lab_status">
+                                        <div class="text-lg text-center">{{lab.status}}</div>
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        Report Bug to anonymouskmr@gmail.com
+
+        </div>
+
+    </section>
+    <section>
+        <div class="flex flex-col justify-center h-full">
+            <!-- Table -->
+            <div id="logs" class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+
+            </div>
+    </section>
+
+    <button id="myBtn">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2 class="modal_header_text"></h2>
+        </div>
+        <div class="modal-body">
+        <p>Some text in the Modal Body</p>
+        <p>Some other text... </p>
+        </div>
+        <div class="modal-footer">
+        <h3>Modal Footer</h3>
+        </div>
+    </div>
+
+    </div>
+
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+</body>
+
+<script src="{% static 'main.js' %}"></script>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
+
+</html>
